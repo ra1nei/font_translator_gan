@@ -18,16 +18,21 @@ def font2image(input_file, output_paths, characters, size):
     if not os.path.exists(output_path):
         os.mkdir(output_path)
         
-    AZ = [chr(i) for i in range(0x0041,0x005A+1)]    
     file_sizes=[]    
     for word in characters:
         font = pygame.font.Font(input_file, size)
-        rtext = font.render(word, True, (0, 0, 0), (255, 255, 255))
+        try:
+            rtext = font.render(word, True, (0, 0, 0), (255, 255, 255))
+        except:
+            # bỏ qua glyph mà font không có
+            continue
+
+        # nếu là chữ in hoa (Unicode-aware)
+        if word.isupper():
+            word = word + '+'
         
-        if word in AZ:      # for uppercase letter
-            word = word+'+'
-        pygame.image.save(rtext, os.path.join(output_path,word+".png"))
-        
+        pygame.image.save(rtext, os.path.join(output_path, word + ".png"))
+
     remove_duplicated_images(output_path)
     process_image(output_path, size)
     
