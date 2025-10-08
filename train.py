@@ -3,7 +3,7 @@ from options.train_options import TrainOptions
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
-import torch
+import torch, wandb
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
@@ -35,6 +35,21 @@ if __name__ == '__main__':
                 save_result = total_iters % opt.update_html_freq == 0
                 model.compute_visuals()
                 visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)
+            
+            ### DEBUG
+            if opt.use_wandb and total_iters % opt.display_freq == 0:
+                model.compute_visuals()
+                visuals = model.get_current_visuals()
+                images = []
+                for label, image in visuals.items():
+                    # convert tensor -> wandb.Image safely
+                    if torch.is_tensor(image):
+                        image = image.detach().cpu()
+                        if image.ndim == 3 and image.shape[0] in [1, 3]:  # (C,H,W)
+                            images.append(wandb.Image(image, caption=label))
+                if images:
+                    wandb.log({"visuals": images, "epoch": epoch, "total_iters": total_iters})
+            ###
 
             if total_iters % opt.print_freq == 0:    # print training losses and save logging information to the disk
                 losses = model.get_current_losses()
