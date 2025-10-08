@@ -67,16 +67,9 @@ class FontDataset(BaseDataset):
         return image
         
     def get_style_paths(self, parts):
-        # Lấy gốc của font dataset (tới folder phase: train/test)
-        root = os.path.join(self.opt.dataroot, self.opt.phase)
-        # Lấy tên font (vd. "my_data") và chữ (vd. "A.png")
-        font_name = parts[-2]
-        letter = parts[-1]
-        # Lấy thư mục style (vd. english/my_data)
-        style_font_path = os.path.join(root, self.style_language, font_name)
-        # Chọn ngẫu nhiên self.style_channel chữ từ font style
-        style_letters = random.sample(os.listdir(style_font_path), self.style_channel)
-        return [os.path.join(style_font_path, l) for l in style_letters]
-
+        english_font_path = os.path.join(parts[0], parts[1], parts[2], parts[3], self.style_language, parts[5])
+        english_paths = [os.path.join(english_font_path, letter) for letter in random.sample(os.listdir(english_font_path), self.style_channel)]
+        return english_paths
+    
     def get_content_path(self, parts):
         return os.path.join(parts[0], parts[1], parts[2], parts[3], 'source', parts[-1])
