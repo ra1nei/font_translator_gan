@@ -67,7 +67,10 @@ class FontDataset(BaseDataset):
         return image
         
     def get_style_paths(self, parts):
-        english_font_path = os.path.join(parts[0], parts[1], parts[2], parts[3], self.style_language, parts[5])
+        ### debug
+        print(parts)
+        ###
+        english_font_path = os.path.join(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], self.style_language)
         english_paths = [os.path.join(english_font_path, letter) for letter in random.sample(os.listdir(english_font_path), self.style_channel)]
         return english_paths
     
