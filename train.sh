@@ -1,5 +1,5 @@
 python train.py \
-  --dataroot /kaggle/working/font_translator_gan/datasets/my_data/train \
+  --dataroot ./datasets/my_data/train \
   --model font_translator_gan \
   --name train \
   --no_dropout \
