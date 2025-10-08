@@ -37,7 +37,7 @@ class FontDataset(BaseDataset):
             self.content_language = 'english'
             self.style_language = 'chinese'
         BaseDataset.__init__(self, opt)
-        self.dataroot = os.path.join(opt.dataroot, opt.phase, self.content_language)  # get the image directory
+        self.dataroot = os.path.join(opt.dataroot, self.content_language)  # get the image directory
         self.paths = sorted(make_dataset(self.dataroot, opt.max_dataset_size))  # get image paths
         self.style_channel = opt.style_channel
         self.transform = transforms.Compose([transforms.ToTensor(),
