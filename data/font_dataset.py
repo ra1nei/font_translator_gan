@@ -68,9 +68,14 @@ class FontDataset(BaseDataset):
         
     def get_style_paths(self, parts):
         style_dir = os.path.join(os.path.dirname(self.dataroot), self.style_language)
-        all_styles = os.listdir(style_dir)
-        chosen = random.sample(all_styles, self.style_channel)
-        return [os.path.join(style_dir, f) for f in chosen]
+        all_files = []
+        for root, _, files in os.walk(style_dir):
+            for f in files:
+                if f.endswith(('.png', '.jpg', '.jpeg')):
+                    all_files.append(os.path.join(root, f))
+        chosen = random.sample(all_files, self.style_channel)
+        return chosen
+
 
     def get_content_path(self, parts):
         content_dir = os.path.join(os.path.dirname(self.dataroot), 'source')
