@@ -4,6 +4,7 @@ from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
 import torch, wandb
+from tqdm import tqdm
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
@@ -22,7 +23,7 @@ if __name__ == '__main__':
         epoch_iter = 0                  # the number of training iterations in current epoch, reset to 0 every epoch
         visualizer.reset()              # reset the visualizer: make sure it saves the results to HTML at least once every epoch
 
-        for i, data in enumerate(dataset):  # inner loop within one epoch
+        for i, data in enumerate(tqdm(dataset, desc=f"Epoch {epoch}", ncols=100)):  # inner loop within one epoch
             iter_start_time = time.time()  # timer for computation per iteration
             if total_iters % opt.print_freq == 0:
                 t_data = iter_start_time - iter_data_time
