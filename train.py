@@ -8,6 +8,14 @@ from tqdm import tqdm
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()   # get training options
+    if opt.use_wandb:
+        import wandb
+        wandb.login()  
+        wandb.init(
+            project=opt.name,   # tên project, ví dụ 'FontDiffuser'
+            name=f"run_{time.strftime('%Y%m%d_%H%M%S')}",  # tên run duy nhất
+            config=vars(opt)
+        )
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
