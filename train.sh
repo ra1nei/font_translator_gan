@@ -6,5 +6,5 @@ python train.py \
   --gpu_ids 0 \
   --use_wandb \
   --wandb_project font_translator_gan \
-  --wandb_run_name train \
+  --wandb_run_name font_translator_gan_train \
   --batch_size 128
