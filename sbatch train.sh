@@ -13,11 +13,11 @@ source ~/.bashrc
 # Vào project
 cd ~/data/TDKD/font_translator_gan || exit
 
-# Đảm bảo wandb login với đúng key của bạn
-wandb login --relogin $WANDB_API_KEY
-
 # Load conda env
 source /data/cndt_hangdv/miniconda3/bin/activate fontgan || { echo "Failed to activate conda env"; exit 1; }
+
+# Đảm bảo wandb login với đúng key của bạn
+wandb login --relogin $WANDB_API_KEY
 
 # Cập nhật code
 git pull origin main

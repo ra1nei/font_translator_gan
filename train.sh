@@ -7,4 +7,5 @@ python train.py \
   --use_wandb \
   --wandb_project font_translator_gan \
   --wandb_run_name font_translator_gan_train \
-  --batch_size 128
+  --batch_size 128 \
+  --display_id 0
