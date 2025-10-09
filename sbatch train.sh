@@ -7,6 +7,9 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
 
+# Cập nhật code
+git pull origin main
+
 # Load biến môi trường từ ~/.bashrc (WANDB_API_KEY sẽ có ở đây)
 source ~/.bashrc
 
@@ -18,9 +21,6 @@ source /data/cndt_hangdv/miniconda3/bin/activate fontgan || { echo "Failed to ac
 
 # Đảm bảo wandb login với đúng key của bạn
 wandb login --relogin $WANDB_API_KEY
-
-# Cập nhật code
-git pull origin main
 
 # Chạy training
 bash "./train.sh"
